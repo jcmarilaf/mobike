@@ -1,0 +1,137 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <title>Mobike</title>
+    <link rel="icon" href="{% static 'img/mobike.jpg' %}">
+    <script src="https://kit.fontawesome.com/9c094d55de.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href= " {% static 'css/estilos.css' %}">
+</head>
+<body>
+    <!-- header-menu -->
+    <header>
+        <div class="header-content">
+            <div class="logo">
+                <img src=" {% static 'img/mobike.jpg' %}" alt="">
+                <h1> <a href="{% url 'inicio'%}">Mobike</a></h1>
+            </div>
+            <div class="menu" id="show-menu">
+                <nav>
+                    <ul>
+                        <li class='menu-selected'><a href="{% url 'inicio'%}"  class="text-menu-selected"><i class="fas fa-house-user"></i>Inicio</a></li>
+                        <li><a href="{% url 'estacionamientos'%}"> <i class="far fa-laugh-squint"></i>Estacionamientos</a></li>
+                        {% if user.is_authenticated %}
+                        {% if user.usuario_administrador %}
+                        <li><a href="{% url 'admin:index'%}"><i class="far fa-dizzy"></i>Administrar</a></li>
+                        <li><a href="{% url 'cerrarSesion'%}">Cerrar sesion</a></li>
+                        <li><a href="#"> {{user.nombres}} {{user.apellido}}</a></li>
+                        {% endif %}
+                        {% endif %}
+                        {% if user.is_authenticated %}
+                        {% if not user.usuario_administrador %}
+                        <li><a href="{% url 'recorridos'%}"><i class="far fa-dizzy"></i>Recorridos</a></li>
+                        <li><a href="{% url 'cerrarSesion'%}">Cerrar sesion</a></li>
+                        <li><a href="#"> {{user.nombres}} {{user.apellido}}</a></li>
+                        {% endif %}
+                        {% else %}
+                        <li><a href="{% url 'ingresar'%}" ><i class="fas fa-user-plus"></i>Ingresar</a></li>
+                        {% endif %}
+                    </ul>
+                </nav>
+            </div>
+        </div>
+        <div id="icon-menu">
+            <i class="fas fa-bars"></i>
+        </div>
+    </header>
+    <!-- portada -->
+    <div class="container-x" id="move-content">
+        <div class="container-cover">
+            <div class="container-info-cover">
+                <h1> Let's Mobike!</h1>
+                <p>La solución perfecta de primera y última milla</p>
+            </div>
+        </div>
+        <div class="container-all">
+            <div class="container-content">
+                <article>
+                    <h2>¡Mobike te acerca a tu lugar de destino!</h2>
+                    <p>Miles de bicicletas disponibles a tu alrededor. ¡Finaliza el recorrido en cualquier estacionamiento para bicicletas que esté cerca de tu lugar de destino!</p>
+                    <h2>Una opción sencilla y práctica</h2>
+                    <p>Después de descargar la aplicación y registrarte, solo escanea el código QR que figura en la bicicleta y comienza tu recorrido. ¡Cierra el candado una vez que dejes la bicicleta en el área de estacionamiento y listo!
+                    </p>
+                    <h2>#MobikeMovement</h2>
+                    <p>Ya no tendrás que acarrear tu propia bicicleta a todos lados ni viajar apretado en los autobuses. ¡Simplemente usa Mobike para llegar a donde quieras!  </p>
+                    <iframe width="720" height="315" src="https://www.youtube.com/embed/dKBbOF5fBPI" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                </article>
+                <!-- aside -->
+                <div class="container-aside">
+                    <aside><img src="{% static 'img/home1.jpg' %}" alt="">
+                        <h3>#QuédateEnCasa</h3>
+                        <p>🏠Quédate en casa, para volver a pedalear pronto🚲
+                            -
+                            📲Para más información visita: https://gob.cl/coronavirus/
+                            👮‍Obtén tu permiso o salvoconducto en: https://comisariavirtual.cl
+                            -
+                            😷¡Ya llegará el momento en que podremos volver a estar juntos! 🤗
+                            -
+                            #SoyMobiker #PedaleaResponsablemente</p>
+                        <a href="https://www.instagram.com/p/CCZrgvkHRnR/">VER PUBLICACIÓN</a>
+                    </aside>
+                    <aside><img src="{% static 'img/home2.jpg' %}" alt="">
+                        <h3>#APPGallery</h3>
+                        <p>📲 ¡Ahora nos puedes encontrar directamente en la APP Gallery de Huawei y prepárate que mañana tenemos un concurso para ti! 🚲
+                            -
+                            #SoyMobiker</p>
+                        <a href="https://www.instagram.com/p/B5oUR_AnCOT/">VER PUBLICACIÓN</a>
+                    </aside>
+                    <aside><img src="{% static 'img/home3.jpg' %}" alt="">
+                        <h3>#PaseMensual</h3>
+                        <p>🚲¡Atentos Mobikers! 😎 🎉¡Nuestro Pase Mensual ahora a $4.500!✨ 👌¡Aprovecha por tan solo $150 al día! 📲
+
+                            #SoyMobiker</p>
+                        <a href="https://www.instagram.com/p/B8zg7RGnZre/">VER PUBLICACIÓN</a>
+                    </aside>
+                </div>
+            </div>
+        </div>
+        <!-- footer -->
+        <div class="container-footer">
+            <footer>
+                <div class="logo-footer">
+                    <img src="{% static 'img/mobike.jpg' %}" alt="">
+                </div>
+                <div class="redes-footer">
+                    <a href="https://www.facebook.com/MobikeCL/?brand_redir=1914107855579139"><i
+                            class="fab fa-facebook icon-redes-footer"></i></a>
+                    <a href="https://www.instagram.com/mobikecl/"><i
+                            class="fab fa-instagram icon-redes-footer"></i></a>
+                    <a href="https://twitter.com/MobikeCL"><i class="fab fa-twitter icon-redes-footer"></i></a>
+                </div>
+                <div class="certificacion">
+                    <p>
+                        <a href="http://jigsaw.w3.org/css-validator/check/referer">
+                            <img style="border:0;width:88px;height:31px"
+                                src="http://jigsaw.w3.org/css-validator/images/vcss" alt="¡CSS Válido!" />
+                        </a>
+                    </p>
+                    <p>
+                        <a href="http://jigsaw.w3.org/css-validator/check/referer">
+                            <img style="border:0;width:88px;height:31px"
+                                src="http://jigsaw.w3.org/css-validator/images/vcss-blue" alt="¡CSS Válido!" />
+                        </a>
+                    </p>
+                </div>
+                <hr>
+                <h4> 2020 Ducoco memes - Todos los Derechos Reservados</h4>
+            </footer>
+        </div>
+    </div>
+    <script src="js/script.js"></script>
+</body>
+
+</html>

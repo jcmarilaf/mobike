@@ -1,0 +1,131 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <script src="https://kit.fontawesome.com/9c094d55de.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="{% static 'css/ingresar.css' %}">
+    <link rel="stylesheet" href=" {% static 'css/estilos.css' %}">
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.2/dist/jquery.validate.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.2/dist/additional-methods.min.js"></script>
+    <title>Ingresar</title>
+    <link rel="icon" href="{% static 'img/mobike.jpg' %}">
+</head>
+
+<body>
+    <!-- header -->
+    <header>
+        <div class="header-content">
+            <div class="logo">
+                <img src=" {% static 'img/mobike.jpg' %}" alt="">
+                <h1> <a href="{% url 'inicio'%}">Mobike</a></h1>
+            </div>
+            <div class="menu" id="show-menu">
+                <nav>
+                    <ul>
+                        <li><a href="{% url 'inicio'%}" ><i 
+                            class="fas fa-house-user"></i>Inicio</a></li>
+                        <li><a href="{% url 'estacionamientos'%}"> <i class="far fa-laugh-squint"></i>Estacionamientos</a></li>
+                        {% if user.is_authenticated %}
+                        {% if user.is_superuser %}
+                        <li><a href="{% url 'admin:index'%}"><i class="far fa-dizzy"></i>administrar</a></li>
+                        {% endif %}
+                        <li><a href="{% url 'recorridos'%}"><i class="far fa-dizzy"></i>Recorridos</a></li>
+                        <li><a href="{% url 'cerrarSesion'%}">Cerrar sesion</a></li>
+                        <li><a href="#"> {{user.nombres}} {{user.apellido}}</a></li>
+                        {% else %}
+                        <li class='menu-selected'><a href="{% url 'ingresar'%}" class="text-menu-selected"><i class="fas fa-user-plus"></i>Ingresar</a></li>
+                        {% endif %}
+                    </ul>
+                </nav>
+            </div>
+        </div>
+        <div id="icon-menu">
+            <i class="fas fa-bars"></i>
+        </div>
+    </header>
+    <!-- inicio de sesion -->
+    <div class="container-x" id="move-content">
+        <div class="container-ingresar">
+            <div class="container-inicio">
+                <div class="ctn-form">
+                    <img src="{% static 'img/mobike2.png' %}" alt="" class="logo-form1">
+                    <h2 class="title">Iniciar Sesión</h2>
+                    <form method="POST">
+                        {% csrf_token %}
+                        <div class="form-group">
+                            <label>Nombre de usuario</label>
+                            <input class="form-control" type="text" placeholder="Ingrese Nombre de usuario"
+                                name="username">
+                            <div class="error" {{ form.errors.username}}></div>
+                            <br>
+                        </div>
+                        <div class="form-group">
+                            <label>Contraseña</label>
+                            <input class="form-control" type="password" placeholder="Ingrese Contraseña"
+                                name="password">
+                            <div class="error" {{ form.errors.password}}></div>
+                            <br>
+                        </div>
+                        {% if form.non_field_errors %}
+                        <div class="form-group">
+                            <div class="bg-danger mt-1 p-2">Login incorrecto!</div>
+                        </div>
+                        {% endif %}
+
+                        {{form.non_field_errors}}
+
+                        <button type="submit" value="Iniciar">Ingresar</button>
+                    </form>
+                    <span class="text-footer">¿Aún no te has registrado?
+                        <a href="{% url 'registrar'%}">Regístrate</a>
+                        <br>
+                        ¿has olvidado tu contraseña?<a href="#">Haz click aqui!</a>
+                    </span>
+                </div>
+                <div class="ctn-text">
+                    <div class="capa"></div>
+                    <h1 class="title-description">Iniciar Sesión.</h1>
+                </div>
+            </div>
+        </div>
+        <!-- footer -->
+        <div class="container-footer">
+            <footer>
+                <div class="logo-footer">
+                    <img src=" {% static 'img/mobike.jpg' %}" alt="">
+                </div>
+                <div class="redes-footer">
+                    <a href="https://www.facebook.com/MobikeCL/?brand_redir=1914107855579139"><i
+                            class="fab fa-facebook icon-redes-footer"></i></a>
+                    <a href="https://www.instagram.com/mobikecl/"><i class="fab fa-instagram icon-redes-footer"></i></a>
+                    <a href="https://twitter.com/MobikeCL"><i class="fab fa-twitter icon-redes-footer"></i></a>
+                </div>
+                <div class="certificacion">
+                    <p>
+                        <a href="http://jigsaw.w3.org/css-validator/check/referer">
+                            <img style="border:0;width:88px;height:31px"
+                                src="http://jigsaw.w3.org/css-validator/images/vcss" alt="¡CSS Válido!" />
+                        </a>
+                    </p>
+                    <p>
+                        <a href="http://jigsaw.w3.org/css-validator/check/referer">
+                            <img style="border:0;width:88px;height:31px"
+                                src="http://jigsaw.w3.org/css-validator/images/vcss-blue" alt="¡CSS Válido!" />
+                        </a>
+                    </p>
+                </div>
+                <hr>
+                <h4> 2020 Mobike - Todos los Derechos Reservados</h4>
+            </footer>
+        </div>
+    </div>
+    <!-- scripts -->
+    <script src="js/script.js"></script>
+</body>
+
+</html>

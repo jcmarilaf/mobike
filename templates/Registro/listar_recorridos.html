@@ -1,0 +1,108 @@
+{% load static %}
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <title>Recorridos</title>
+    <link rel="icon" href="{% static 'img/mobike.jpg' %}">
+    <script src="https://kit.fontawesome.com/9c094d55de.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href=" {% static 'css/estilos.css' %}">
+    <script src="js/modernizr.js"></script>
+</head>
+
+<body>
+    <!-- header-menu -->
+    <header>
+        <div class="header-content">
+            <div class="logo">
+                <img src=" {% static 'img/mobike.jpg' %}" alt="">
+                <h1> <a href="{% url 'inicio'%}">Mobike</a></h1>
+            </div>
+            <div class="menu" id="show-menu">
+                <nav>
+                    <ul>
+                        <li><a href="{% url 'inicio'%}"><i class="fas fa-house-user"></i>Inicio</a></li>
+                        <li><a href="{% url 'estacionamientos'%}"> <i
+                                    class="far fa-laugh-squint"></i>Estacionamientos</a></li>
+                        {% if user.is_authenticated %}
+                        {% if user.usuario_administrador %}
+                        <li><a href="{% url 'admin:index'%}"></a><i class="far fa-dizzy"></i>Administrar</a></li>
+                        <li><a href="{% url 'cerrarSesion'%}">Cerrar sesion</a></li>
+                        <li><a href="#"> {{user.nombres}} {{user.apellido}}</a></li>
+                        {% endif %}
+                        {% endif %}
+                        {% if user.is_authenticated %}
+                        {% if not user.usuario_administrador %}
+                        <li class='menu-selected'><a href="{% url 'recorridos'%}" class="text-menu-selected"><i
+                                    class="far fa-dizzy"></i>Recorridos</a></li>
+                        <li><a href="{% url 'cerrarSesion'%}">Cerrar sesion</a></li>
+                        <li><a href="#"> {{user.nombres}} {{user.apellido}}</a></li>
+                        {% endif %}
+                        {% else %}
+                        <li><a href="{% url 'ingresar'%}"><i class="fas fa-user-plus"></i>Ingresar</a></li>
+                        {% endif %}
+                    </ul>
+                </nav>
+            </div>
+        </div>
+        <div id="icon-menu">
+            <i class="fas fa-bars"></i>
+        </div>
+    </header>
+    <!-- Recorridos -->
+    <div class="container-x" id="move-content">
+        <div class="container-recorridos">
+            <div class="ctn-form2">
+                <h2 class="title">Recorridos</h2>
+                {% for c in recorridos %}
+                <div>
+                    <p> Usuario {{ c.usuario }} </p>
+                    <p>origen: {{ c.origen }}</p>
+                    <p>destino: {{ c.destino }}</p>  
+                    <p> Valor viaje $ {{ c.valor_total }} </p>
+                    <p> ----------------------------------------</p>
+                </div>
+                <br>
+            {% endfor %}
+            </div>
+        </div>
+    </div>
+    <!-- footer -->
+    <div class="container-footer">
+        <footer>
+            <div class="logo-footer">
+                <img src="{% static 'img/mobike.jpg' %}" alt="">
+            </div>
+            <div class="redes-footer">
+                <a href="https://www.facebook.com/DuocUC.PadreAlonsodeOvalle/"><i
+                        class="fab fa-facebook icon-redes-footer"></i></a>
+                <a href="https://www.instagram.com/duocuc_sedepadrealonsodeovalle/"><i
+                        class="fab fa-instagram icon-redes-footer"></i></a>
+                <a href="https://twitter.com/DuocUC"><i class="fab fa-twitter icon-redes-footer"></i></a>
+            </div>
+            <div class="certificacion">
+                <p>
+                    <a href="http://jigsaw.w3.org/css-validator/check/referer">
+                        <img style="border:0;width:88px;height:31px"
+                            src="http://jigsaw.w3.org/css-validator/images/vcss" alt="¡CSS Válido!" />
+                    </a>
+                </p>
+                <p>
+                    <a href="http://jigsaw.w3.org/css-validator/check/referer">
+                        <img style="border:0;width:88px;height:31px"
+                            src="http://jigsaw.w3.org/css-validator/images/vcss-blue" alt="¡CSS Válido!" />
+                    </a>
+                </p>
+            </div>
+            <hr>
+            <h4> 2020 Mobike - Todos los Derechos Reservados</h4>
+        </footer>
+    </div>
+    <!-- scripts -->
+    <script src="js/script.js"></script>
+    <script src="js/map1.js"></script>
+</body>
+
+</html>
