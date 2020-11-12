@@ -21,7 +21,8 @@ class UsuarioManager(BaseUserManager):
                                    nombres=nombres,
                                    apellido=apellido,
                                    password=password)
-        user.usuario_administrador = True
+        user.is_staff = True
+        user.is_admin = True
         user.save()
         return user
 
@@ -29,14 +30,15 @@ class UsuarioManager(BaseUserManager):
 
 class Usuario(AbstractBaseUser):
     username = models.CharField(
-        'Nombre de usuario', unique=True, max_length=100)
+        'Nombre de usuario', unique=True, max_length=100,primary_key=True)
     email = models.EmailField('Email', max_length=254, unique=True)
     nombres = models.CharField('Nombre', max_length=70, null=False)
     apellido = models.CharField('Apellido', max_length=70, null=False)
     imagen = models.ImageField(
         'Imagen de perfil', upload_to='perfil/', max_length=200, blank=True, null=True)
-    usuario_activo = models.BooleanField(default=True)
-    usuario_administrador = models.BooleanField(default=False)
+    is_active = models.BooleanField(default=True)
+    is_staff = models.BooleanField(default=False)
+    is_admin = models.BooleanField(default=False)
     objects = UsuarioManager()
 
     USERNAME_FIELD = 'username'
@@ -50,7 +52,3 @@ class Usuario(AbstractBaseUser):
 
     def has_module_perms(self, app_label):
         return True
-
-    @property
-    def is_staff(self):
-        return self.usuario_administrador

@@ -1,0 +1,164 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <script src="https://kit.fontawesome.com/9c094d55de.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="{% static 'css/ingresar.css' %}">
+    <link rel="stylesheet" href=" {% static 'css/estilos.css' %}">
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.2/dist/jquery.validate.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.2/dist/additional-methods.min.js"></script>
+    <title>Perfil</title>
+    <link rel="icon" href="{% static 'img/mobike.jpg' %}">
+</head>
+
+<body>
+    <!-- header -->
+    <header>
+        <div class="header-content">
+            <div class="logo">
+                <img src=" {% static 'img/mobike.jpg' %}" alt="">
+                <h1> <a href="{% url 'inicio'%}">Mobike</a></h1>
+            </div>
+            <div class="menu" id="show-menu">
+                <nav>
+                    <ul>
+                        <li><a href="{% url 'inicio'%}"><i class="fas fa-house-user"></i>Inicio</a></li>
+                        <li><a href="{% url 'estacionamientos'%}"> <i
+                                    class="far fa-laugh-squint"></i>Estacionamientos</a></li>
+                        <!-- usuario Administrador -->
+                        {% if user.is_authenticated %}
+                        {% if user.is_admin %}
+                            <li><a href="{% url 'admin:index'%}"><i class="far fa-dizzy"></i>Administrar</a></li>
+                            <li><a href="{% url 'cerrarSesion'%}">Cerrar sesion</a></li>
+                            <li class='menu-selected'><a href="{% url 'perfil' %}" class="text-menu-selected"> {{user.nombres}} {{user.apellido}}</a></li>
+                            {% if user.imagen %}
+                                <img src="{{ user.imagen.url }}" alt="imagen no encontrada" class="image-menu">
+                            {% else %}
+                                <img src="{% static 'img/image_default.png'%}" alt="imagen no encontrada" class="image-menu">
+                            {% endif%}
+                        {% endif %}
+                        <!-- usuario normal -->
+                        {% if not user.is_admin %}
+                            <li><a href="{% url 'recorridos'%}"><i class="far fa-dizzy"></i>Recorridos</a></li>
+                            <li><a href="{% url 'cerrarSesion'%}">Cerrar sesion</a></li>
+                            <li class='menu-selected'><a href="{% url 'perfil' %}" class="text-menu-selected"> {{user.nombres}} {{user.apellido}}</a></li>
+                            {% if user.imagen %}
+                                <img src="{{ user.imagen.url }}" alt="imagen no encontrada" class="image-menu">
+                            {% else %}
+                                <img src="{% static 'img/image_default.png'%}" alt="imagen no encontrada" class="image-menu">
+                            {% endif%}
+                        {% endif %}
+                        {% else %}
+                            <li><a href="{% url 'ingresar'%}" ><i
+                                    class="fas fa-user-plus"></i>Ingresar</a></li>
+                        {% endif %}
+                    </ul>
+                </nav>
+            </div>
+        </div>
+        <div id="icon-menu">
+            <i class="fas fa-bars"></i>
+        </div>
+    </header>
+        {% if messages %}
+    <ul class="messages alert-info">
+        {% for message in messages %}
+        <li {% if message.tags %} class="{{ message.tags }}" {% endif %}>{{ message }}</li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+    <!-- inicio de sesion -->
+    <div class="container-x" id="move-content">
+        <div class="container-all">
+            <div class="container-registrar">
+                <div class="ctn-form3">
+                    <div class="header-perfil">
+                        {% if user.imagen %}
+                            <img src="{{ user.imagen.url }}" alt="imagen no encontrada" class="avatar">
+                        {% else %}
+                            <img src="{% static 'img/image_default.png'%}" alt="imagen no encontrada" class="avatar">
+                        {% endif%}
+                        <h2 class="username">{{user.username}}</h2>
+                    </div>
+                    <form class = "formulario" method="POST" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        <div>
+                            <label class="form-label">Nombre de usuario (No se puede modificar.)</label>
+                            <input value='{{ user.username }}' type="text" name="username" readonly class="form-input">
+                            <br>
+                        </div>
+                        <div>
+                            <label class="form-label">Nombre</label>
+                            <input value='{{ user.nombres }}' type="text" name="nombres" class="form-input">
+                            <br>
+                        </div>
+                        <div>
+                            <label class="form-label">Apellido</label>
+                            <input value='{{ user.apellido}}' type="text" name="apellido" class="form-input">
+                            <br>
+                        </div>
+                        <div>
+                            <label class="form-label">Correo</label>
+                            <input value='{{ user.email}}' type="text" name="email" class="form-input" size="30px">
+                            <br>
+                        </div>
+                        <div>
+                            <label class="form-label">Imagen</label>
+                            <input type="file" name="imagen" class="form-input-image" >
+                            <br>
+                        </div>
+                        <div>
+                            <button type="submit">Actualizar</button>
+
+                            <br>
+                        </div>
+                    </form>
+
+                </div>
+            </div>
+        </div>
+        <!-- footer -->
+        <div class="container-footer">
+            <footer>
+                <div class="logo-footer">
+                    <img src=" {% static 'img/mobike.jpg' %}" alt="">
+                </div>
+                <div class="redes-footer">
+                    <a href="https://www.facebook.com/MobikeCL/?brand_redir=1914107855579139"><i
+                            class="fab fa-facebook icon-redes-footer"></i></a>
+                    <a href="https://www.instagram.com/mobikecl/"><i class="fab fa-instagram icon-redes-footer"></i></a>
+                    <a href="https://twitter.com/MobikeCL"><i class="fab fa-twitter icon-redes-footer"></i></a>
+                </div>
+                <div class="certificacion">
+                    <p>
+                        <a href="http://jigsaw.w3.org/css-validator/check/referer">
+                            <img style="border:0;width:88px;height:31px"
+                                src="http://jigsaw.w3.org/css-validator/images/vcss" alt="¡CSS Válido!" />
+                        </a>
+                    </p>
+                    <p>
+                        <a href="http://jigsaw.w3.org/css-validator/check/referer">
+                            <img style="border:0;width:88px;height:31px"
+                                src="http://jigsaw.w3.org/css-validator/images/vcss-blue" alt="¡CSS Válido!" />
+                        </a>
+                    </p>
+                </div>
+                <hr>
+                <h4> 2020 Mobike - Todos los Derechos Reservados</h4>
+            </footer>
+        </div>
+    </div>
+    <!-- scripts -->
+    <script src="{% static 'js/jquery.js' %}"></script>
+     <script src="{% static 'js/script.js' %}"></script>
+    <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
+    <script src="{% static 'js/bootstrap.min.js' %}"></script>
+</body>
+
+</html>

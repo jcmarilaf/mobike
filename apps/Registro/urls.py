@@ -1,10 +1,12 @@
 from django.urls import path, include
 from . import views
+from django.conf import settings
+from django.conf.urls.static import static
 
 urlpatterns = [
 
     # listar las bicicleta de la bd
-    path('listar_recorridos', views.listar_recorridos, name="listar_recorridos"),
+    path('recorridos', views.listar_recorridos, name="recorridos"),
     
     # agregar una bicicleta    
     path('agregar_recorridos', views.agregar_recorridos, name="agregar_recorridos"),
@@ -16,3 +18,6 @@ urlpatterns = [
     path('borrar_recorridos/<int:recorridos_id>', views.borrar_recorridos, name="borrar_recorridos"),
 
 ]
+
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

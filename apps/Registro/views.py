@@ -1,12 +1,15 @@
 from django.shortcuts import render, redirect
 from .models import Recorridos
 from .forms import RecorridosForm
-
+from django.db.models import Q 
+from apps.Usuario.models import Usuario
+from django.views.generic import ListView
 # Create your views here.
 
 def listar_recorridos(request):
     recorridos = Recorridos.objects.all()
-    return render(request, "Registro/listar_recorridos.html", {'recorridos': recorridos})
+
+    return render(request, "Principal/recorridos.html", {'recorridos': recorridos})
 
 def agregar_recorridos(request):
     if request.method == "POST":
@@ -49,3 +52,5 @@ def editar_recorridos(request, recorridos_id):
     # Si llegamos al final renderizamos el formulario
     return render(request, "Registro/editar_recorridos.html", {'form': form})
 
+
+# ventana recorridos

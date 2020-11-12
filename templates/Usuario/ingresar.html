@@ -84,7 +84,7 @@
                     <span class="text-footer">¿Aún no te has registrado?
                         <a href="{% url 'registrar'%}">Regístrate</a>
                         <br>
-                        ¿has olvidado tu contraseña?<a href="#">Haz click aqui!</a>
+                        ¿has olvidado tu contraseña?<a href="{% url 'recuperarcontrasena'%}">Haz click aqui!</a>
                     </span>
                 </div>
                 <div class="ctn-text">
@@ -125,7 +125,8 @@
         </div>
     </div>
     <!-- scripts -->
-    <script src="js/script.js"></script>
+    <script src="{% static 'js/jquery.js' %}"></script>
+     <script src="{% static 'js/script.js' %}"></script>
 </body>
 
 </html>

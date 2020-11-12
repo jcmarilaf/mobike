@@ -7,6 +7,7 @@
         content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <title>Recorridos</title>
     <link rel="icon" href="{% static 'img/mobike.jpg' %}">
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
     <script src="https://kit.fontawesome.com/9c094d55de.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href=" {% static 'css/estilos.css' %}">
     <script src="js/modernizr.js"></script>
@@ -26,22 +27,32 @@
                         <li><a href="{% url 'inicio'%}"><i class="fas fa-house-user"></i>Inicio</a></li>
                         <li><a href="{% url 'estacionamientos'%}"> <i
                                     class="far fa-laugh-squint"></i>Estacionamientos</a></li>
+                     <!-- usuario Administrador -->
                         {% if user.is_authenticated %}
-                        {% if user.usuario_administrador %}
-                        <li><a href="{% url 'admin:index'%}"></a><i class="far fa-dizzy"></i>Administrar</a></li>
-                        <li><a href="{% url 'cerrarSesion'%}">Cerrar sesion</a></li>
-                        <li><a href="#"> {{user.nombres}} {{user.apellido}}</a></li>
+                        {% if user.is_admin %}
+                            <li><a href="{% url 'admin:index'%}"><i class="far fa-dizzy"></i>Administrar</a></li>
+                            <li><a href="{% url 'cerrarSesion'%}">Cerrar sesion</a></li>
+                            <li><a href="{% url 'perfil' %}"> {{user.nombres}} {{user.apellido}}</a></li>
+                            {% if user.imagen %}
+                                <img src="{{ user.imagen.url }}" alt="imagen no encontrada" class="image-menu">
+                            {% else %}
+                                <img src="{% static 'img/image_default.png'%}" alt="imagen no encontrada" class="image-menu">
+                            {% endif%}
                         {% endif %}
-                        {% endif %}
-                        {% if user.is_authenticated %}
-                        {% if not user.usuario_administrador %}
-                        <li class='menu-selected'><a href="{% url 'recorridos'%}" class="text-menu-selected"><i
-                                    class="far fa-dizzy"></i>Recorridos</a></li>
-                        <li><a href="{% url 'cerrarSesion'%}">Cerrar sesion</a></li>
-                        <li><a href="#"> {{user.nombres}} {{user.apellido}}</a></li>
+                        <!-- usuario normal -->
+                        {% if not user.is_admin %}
+                            <li class='menu-selected'><a href="{% url 'recorridos'%}" class="text-menu-selected"><i class="far fa-dizzy"></i>Recorridos</a></li>
+                            <li><a href="{% url 'cerrarSesion'%}">Cerrar sesion</a></li>
+                            <li><a href="{% url 'perfil' %}" > {{user.nombres}} {{user.apellido}}</a></li>
+                            {% if user.imagen %}
+                                <img src="{{ user.imagen.url }}" alt="imagen no encontrada" class="image-menu">
+                            {% else %}
+                                <img src="{% static 'img/image_default.png'%}" alt="imagen no encontrada" class="image-menu">
+                            {% endif%}
                         {% endif %}
                         {% else %}
-                        <li><a href="{% url 'ingresar'%}"><i class="fas fa-user-plus"></i>Ingresar</a></li>
+                            <li><a href="{% url 'ingresar'%}" ><i
+                                    class="fas fa-user-plus"></i>Ingresar</a></li>
                         {% endif %}
                     </ul>
                 </nav>
@@ -53,23 +64,34 @@
     </header>
     <!-- Recorridos -->
     <div class="container-x" id="move-content">
-        <div class="container-recorridos">
-            <div class="ctn-form2">
-                <h2 class="title">Recorridos</h2>
-                {% if object_list %}
-                {% for c in recorridos %}
-                <div>
-                    <p> Usuario {{ c.usuario }} </p>
-                    <p>origen: {{ c.origen }}</p>
-                    <p>destino: {{ c.destino }}</p>  
-                    <p> Valor viaje $ {{ c.valor_total }} </p>
-                    <p> ----------------------------------------</p>
-                </div>
-                <br>
-            {% endfor %}
-            {% else %}
-            <p>No hay registros de recorridos</p>
-            {% endif %}
+        <div class="container-tabla-recorridos">
+            <div class="container-recorridos">
+                <table class="table" >
+                    <thead class="thead-dark">
+                        <tr>
+                            <th>#</th>
+                            <th>Origen</th>
+                            <th>Destino</th>
+                            <th>Fecha</th>
+                            <th>Valor del viaje</th>
+                        </tr>
+                    </thead>
+                    {% if recorridos %}
+                    {% for c in recorridos %}
+                    <tbody>
+                        <tr>
+                            <th scope="row"></th>
+                            <td>{{ c.origen }}</td>
+                            <td>{{ c.destino }}</td>
+                            <td>{{ c.fecha_registro }}</td>
+                            <td> $ {{ c.valor_total }}</td>
+                        </tr>
+                    <br>
+                    {% endfor %}
+                    {% else %}
+                    <p>No hay registros de recorridos</p>
+                    {% endif %}
+                </table>
             </div>
         </div>
     </div>
@@ -105,8 +127,10 @@
         </footer>
     </div>
     <!-- scripts -->
-    <script src="js/script.js"></script>
-    <script src="js/map1.js"></script>
-</body>
+    <script src="{% static 'js/jquery.js' %}"></script>
+    <script src="{% static 'js/script.js' %}"></script>
+    <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
+    <script src="{% static 'js/bootstrap.min.js' %}"></script>
 
+</body>
 </html>
