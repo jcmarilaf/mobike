@@ -17,12 +17,6 @@ class RegistroUsuario(CreateView):
     form_class = RegistroForm
     success_url = reverse_lazy('ingresar')
  
- 
-class UserList(ListView):
-    model = Usuario
-    template_name = 'Usuario/list_user.html'
-
-
 
 @login_required
 def Usuario(request):

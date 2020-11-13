@@ -24,18 +24,39 @@
             <div class="menu" id="show-menu">
                 <nav>
                     <ul>
-                        <li><a href="{% url 'inicio'%}" ><i
-                                    class="fas fa-house-user"></i>Inicio</a></li>
-                        <li><a href="{% url 'estacionamientos'%}"> <i class="far fa-laugh-squint"></i>Estacionamientos</a></li>
+                        <li><a href="{% url 'inicio'%}"><i class="fas fa-house-user"></i>Inicio</a></li>
+                        <!-- usuario Administrador -->
                         {% if user.is_authenticated %}
-                        {% if user.is_superuser %}
-                        <li><a href="{% url 'admin:index'%}"><i class="far fa-dizzy"></i>administrar</a></li>
-                        {% endif %}
-                        <li><a href="{% url 'recorridos'%}"><i class="far fa-dizzy"></i>Recorridos</a></li>
+                        {% if user.is_admin %}
+                        <li><a href="{% url 'admin:index'%}">Administrar</a></li>
+                        <li><a href="{% url 'listar_post'%}">Blog</a></li>
                         <li><a href="{% url 'cerrarSesion'%}">Cerrar sesion</a></li>
-                        <li><a href="#"> {{user.nombres}} {{user.apellido}}</a></li>
+                        <li class='menu-selected'><a href="{% url 'perfil' %}" class="text-menu-selected">
+                                {{user.nombres}} {{user.apellido}}</a></li>
+                        {% if user.imagen %}
+                        <img src="{{ user.imagen.url }}" alt="imagen no encontrada" class="image-menu">
                         {% else %}
-                        <li class='menu-selected'><a href="{% url 'ingresar'%}" class="text-menu-selected"><i class="fas fa-user-plus"></i>Ingresar</a></li>
+                        <img src="{% static 'img/image_default.png'%}" alt="imagen no encontrada" class="image-menu">
+                        {% endif%}
+                        {% endif %}
+                        <!-- usuario normal -->
+                        {% if not user.is_admin %}
+                        <li><a href="{% url 'estacionamientos'%}">Estacionamientos</a></li>
+                        <li><a href="{% url 'listar_post'%}">Blog</a></li>
+                        <li><a href="{% url 'recorridos'%}">Recorridos</a></li>
+                        <li><a href="{% url 'cerrarSesion'%}">Cerrar sesion</a></li>
+                        <li class='menu-selected'><a href="{% url 'perfil' %}" class="text-menu-selected">
+                                {{user.nombres}} {{user.apellido}}</a></li>
+                        {% if user.imagen %}
+                        <img src="{{ user.imagen.url }}" alt="imagen no encontrada" class="image-menu">
+                        {% else %}
+                        <img src="{% static 'img/image_default.png'%}" alt="imagen no encontrada" class="image-menu">
+                        {% endif%}
+                        {% endif %}
+                        {% else %}
+                        <li><a href="{% url 'estacionamientos'%}">Estacionamientos</a></li>
+                        <li><a href="{% url 'listar_post'%}">Blog</a></li>
+                        <li><a href="{% url 'ingresar'%}"><i class="fas fa-user-plus"></i>Ingresar</a></li>
                         {% endif %}
                     </ul>
                 </nav>

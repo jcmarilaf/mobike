@@ -5,17 +5,20 @@ from django.conf.urls.static import static
 
 urlpatterns = [
 
-    # listar las bicicleta de la bd
+    # listar las recorridos de la bd
     path('recorridos', views.listar_recorridos, name="recorridos"),
     
-    # agregar una bicicleta    
-    path('agregar_recorridos', views.agregar_recorridos, name="agregar_recorridos"),
+    # listar post
+    path('post', views.listar_post, name="listar_post"),
     
-        # editar una bicicleta
-    path('editar_recorridos/<int:recorridos_id>', views.editar_recorridos ,name="editar_recorridos"),
+    # agregar una post   
+    path('agregar_post', views.agregar_post, name="agregar_post"),
+    
+    # editar una post
+    path('editar_post/<int:post_id>', views.editar_post ,name="editar_post"),
 
-    # borrar una bicicleta
-    path('borrar_recorridos/<int:recorridos_id>', views.borrar_recorridos, name="borrar_recorridos"),
+    # borrar una post
+    path('borrar_post/<int:post_id>', views.borrar_post, name="borrar_post"),
 
 ]
 

@@ -29,7 +29,7 @@
                     <ul>
                         <li><a href="{% url 'inicio'%}" ><i 
                             class="fas fa-house-user"></i>Inicio</a></li>
-                        <li><a href="{% url 'estacionamientos'%}"> <i class="far fa-laugh-squint"></i>Estacionamientos</a></li>
+                        <li><a href="{% url 'estacionamientos'%}"> Estacionamientos</a></li>
                         {% if user.is_authenticated %}
                         {% if user.is_superuser %}
                         <li><a href="{% url 'admin:index'%}"><i class="far fa-dizzy"></i>administrar</a></li>
@@ -38,6 +38,7 @@
                         <li><a href="{% url 'cerrarSesion'%}">Cerrar sesion</a></li>
                         <li><a href="#"> {{user.nombres}} {{user.apellido}}</a></li>
                         {% else %}
+                        <li><a href="{% url 'listar_post'%}">Blog</a></li>
                         <li class='menu-selected'><a href="{% url 'ingresar'%}" class="text-menu-selected"><i class="fas fa-user-plus"></i>Ingresar</a></li>
                         {% endif %}
                     </ul>
@@ -70,8 +71,7 @@
                 <div class="ctn-text">
                     <div class="capa"></div>
                     <h1 class="title-description">Recuperar contraseña</h1>
-                    <p class="text-description">Ingresa tu email y te enviaremos un enlace para reestablecer tu contraseña.
-                    </p>
+                    <p class="text-description">Ingresa tu email y te enviaremos un enlace para reestablecer tu contraseña.</p>
                 </div>
             </div>
         </div>

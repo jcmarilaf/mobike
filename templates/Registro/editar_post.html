@@ -6,15 +6,13 @@
     <meta charset="UTF-8">
     <meta name="viewport"
         content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <title>Registrar</title>
+    <link rel="icon" href="{% static 'img/mobike.jpg' %}">
     <script src="https://kit.fontawesome.com/9c094d55de.js" crossorigin="anonymous"></script>
-    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
-    <link rel="stylesheet" href="{% static 'css/ingresar.css' %}">
-    <link rel="stylesheet" href=" {% static 'css/estilos.css' %}">
     <script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.2/dist/jquery.validate.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.2/dist/additional-methods.min.js"></script>
-    <title>Perfil</title>
-    <link rel="icon" href="{% static 'img/mobike.jpg' %}">
+    <link rel="stylesheet" href=" {% static 'css/estilos.css' %}">
 </head>
 
 <body>
@@ -70,60 +68,41 @@
             <i class="fas fa-bars"></i>
         </div>
     </header>
-    {% if messages %}
-    <ul class="messages alert-info">
-        {% for message in messages %}
-        <li {% if message.tags %} class="{{ message.tags }}" {% endif %}>{{ message }}</li>
-        {% endfor %}
-    </ul>
-    {% endif %}
-    <!-- inicio de sesion -->
+    <!-- formulario de registro -->
     <div class="container-x" id="move-content">
         <div class="container-all">
             <div class="container-registrar">
-                <div class="ctn-form3">
-                    <div class="header-perfil">
-                        {% if user.imagen %}
-                        <img src="{{ user.imagen.url }}" alt="imagen no encontrada" class="avatar">
-                        {% else %}
-                        <img src="{% static 'img/image_default.png'%}" alt="imagen no encontrada" class="avatar">
-                        {% endif%}
-                        <h2 class="username">{{user.username}}</h2>
-                    </div>
-                    <form class="formulario" method="POST" enctype="multipart/form-data">
+                <div class="ctn-form1">
+                    <h2 class="title">Editar Post</h2>
+                    <form method="POST" enctype="multipart/form-data">
                         {% csrf_token %}
-                        <div>
-                            <label class="form-label">Nombre de usuario (No se puede modificar.)</label>
-                            <input value='{{ user.username }}' type="text" name="username" readonly class="form-input">
+                        <div class="form-group">
+                            <label>Usuario</label>
+                            <input class="form-control" type="text" value='{{user.username}}' name="usuario" readonly>
                             <br>
                         </div>
-                        <div>
-                            <label class="form-label">Nombre</label>
-                            <input value='{{ user.nombres }}' type="text" name="nombres" class="form-input">
+                        <div class="form-group">
+                            <label>Titulo</label>
+                            {{ form.titulo }}
+                            <div class="error" {{ form.errors.titulo}}></div>
                             <br>
                         </div>
-                        <div>
-                            <label class="form-label">Apellido</label>
-                            <input value='{{ user.apellido}}' type="text" name="apellido" class="form-input">
-                            <br>
-                        </div>
-                        <div>
-                            <label class="form-label">Correo</label>
-                            <input value='{{ user.email}}' type="text" name="email" class="form-input" size="30px">
+                        <div class="form-group">
+                            <label>Descripcion</label>
+                            {{ form.descripcion }}
+                            <div class="error" {{ form.errors.descripcion}}></div>
                             <br>
                         </div>
                         <div>
                             <label class="form-label">Imagen</label>
-                            <input type="file" name="imagen" class="form-input-image">
+                            {{ form.imagen }}
                             <br>
                         </div>
-                        <div>
-                            <button type="submit">Actualizar</button>
-
+                        <div class="form-group">
+                            <button type="submit">GRABAR</button>
                             <br>
                         </div>
                     </form>
-
                 </div>
             </div>
         </div>
@@ -131,7 +110,7 @@
         <div class="container-footer">
             <footer>
                 <div class="logo-footer">
-                    <img src=" {% static 'img/mobike.jpg' %}" alt="">
+                    <img src="{% static 'img/mobike.jpg' %}" alt="">
                 </div>
                 <div class="redes-footer">
                     <a href="https://www.facebook.com/MobikeCL/?brand_redir=1914107855579139"><i
@@ -161,8 +140,6 @@
     <!-- scripts -->
     <script src="{% static 'js/jquery.js' %}"></script>
     <script src="{% static 'js/script.js' %}"></script>
-    <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
-    <script src="{% static 'js/bootstrap.min.js' %}"></script>
 </body>
 
 </html>

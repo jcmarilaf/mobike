@@ -643,6 +643,7 @@ button[type="submit"]:hover {
     position: relative;
 }
 
+
 .container-recorridos{
     position: relative;
     text-align: center;
@@ -651,7 +652,7 @@ button[type="submit"]:hover {
     width: 1200px;
     background-color:#F2F2F2;
     border-radius: 30px;
-
+    height: 100%;
 }
 
 
@@ -689,6 +690,93 @@ button[type="submit"]:hover {
     border-style: groove;
     border-radius: 50%;
 }
+
+.container-general-post{
+    padding: 20px;
+    width: 100%;
+    margin: auto;
+    display: flex;
+    justify-content: center;
+    background :#787878;
+    
+}
+
+.descripcion{
+    font-size: 30px;
+    
+}
+
+.container-post{
+    display: flex;
+    justify-content: center;
+    background: #787878;
+    margin: auto;
+}
+
+
+.ctn-post .avatar{
+    width: 100%;
+}
+ 
+.ctn-post h1{
+    font-size: 50px;
+    background: #ff4611;
+    height: 100%;
+    width: 100%;
+}
+.ctn-post{
+    align-self: center;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    background:#eef2f3;
+    color: black;
+    flex-direction: column;
+    border:#ff4611;
+    border-style: solid;
+    border-radius: 30px;
+    border-width: 5px;
+    width: 1000px;
+}
+
+.card{
+    width: 900px;
+    margin: 35px;
+    font-size: 20px;
+    border-style: groove;
+    border-radius: 20px;
+    align-self: center;
+}
+
+.card h4{
+    font-size: 32px;
+}
+
+.crear_post{
+    background-color: #ff4611;
+    display: flex;
+    flex-direction: column;
+    padding: 5px;
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
+}
+
+.crear_post img{
+    margin: auto;
+    align-self: center;
+    height: 50px;
+    width: 50px;
+}
+.crear_post a{
+    margin: 10px;
+    color: #000;
+    text-decoration: none;
+    box-sizing: border-box;
+    font-size: 25px;
+    transition: color 300ms;
+    align-self: center;
+}
+
 /* ---------------Responsive design - adaptable ----------------------*/
 
 @media screen and (max-width: 1500px) {
@@ -720,11 +808,18 @@ button[type="submit"]:hover {
 }
 
 @media screen and (max-width: 1020px) {
+    .ctn-post{
+        width: 800px;
+    }
+
+    .card{
+        width: 700px;
+    }
+
     .container-content, .container, .container-all {
         width: 100%;
         flex-direction: column;
     }
-
 
     .container-aside {
         display: flex;
@@ -775,6 +870,13 @@ button[type="submit"]:hover {
         height: 60%;
     }
 
+    .ctn-post{
+        width: 100%;
+    }
+
+    .card{
+        width: 100%;
+    }
     .container-cover h1{
         margin-block-end: 30%;
         font-size: 60px;
@@ -867,6 +969,13 @@ button[type="submit"]:hover {
 }
 
 @media screen and (max-width:500px) {
+    .ctn-post{
+        width: 360px;
+    }
+
+    .card{
+        width: 100%;
+    }
     .container-recorridos{
         height: 100%;
     }

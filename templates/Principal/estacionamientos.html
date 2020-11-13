@@ -15,6 +15,7 @@
         async defer>
         </script>
 </head>
+
 <body>
     <!-- header-menu -->
     <header>
@@ -26,34 +27,37 @@
             <div class="menu" id="show-menu">
                 <nav>
                     <ul>
-                        <li><a href="{% url 'inicio'%}"  ><i class="fas fa-house-user"></i>Inicio</a></li>
-                        <li class='menu-selected'><a href="{% url 'estacionamientos'%}" class="text-menu-selected"> <i class="far fa-laugh-squint"></i>Estacionamientos</a></li>
-                     <!-- usuario Administrador -->
+                        <li><a href="{% url 'inicio'%}"><i class="fas fa-house-user"></i>Inicio</a></li>
+                        <!-- usuario Administrador -->
                         {% if user.is_authenticated %}
                         {% if user.is_admin %}
-                            <li><a href="{% url 'admin:index'%}"><i class="far fa-dizzy"></i>Administrar</a></li>
-                            <li><a href="{% url 'cerrarSesion'%}">Cerrar sesion</a></li>
-                            <li><a href="{% url 'perfil' %}" > {{user.nombres}} {{user.apellido}}</a></li>
-                            {% if user.imagen %}
-                                <img src="{{ user.imagen.url }}" alt="imagen no encontrada" class="image-menu">
-                            {% else %}
-                                <img src="{% static 'img/image_default.png'%}" alt="imagen no encontrada" class="image-menu">
-                            {% endif%}
+                        <li><a href="{% url 'admin:index'%}"><i class="far fa-dizzy"></i>Administrar</a></li>
+                        <li><a href="{% url 'listar_post'%}">Blog</a></li>
+                        <li><a href="{% url 'cerrarSesion'%}">Cerrar sesion</a></li>
+                        <li><a href="{% url 'perfil' %}"> {{user.nombres}} {{user.apellido}}</a></li>
+                        {% if user.imagen %}
+                        <img src="{{ user.imagen.url }}" alt="imagen no encontrada" class="image-menu">
+                        {% else %}
+                        <img src="{% static 'img/image_default.png'%}" alt="imagen no encontrada" class="image-menu">
+                        {% endif%}
                         {% endif %}
                         <!-- usuario normal -->
                         {% if not user.is_admin %}
-                            <li><a href="{% url 'recorridos'%}"><i class="far fa-dizzy"></i>Recorridos</a></li>
-                            <li><a href="{% url 'cerrarSesion'%}">Cerrar sesion</a></li>
-                            <li><a href="{% url 'perfil' %}" > {{user.nombres}} {{user.apellido}}</a></li>
-                            {% if user.imagen %}
-                                <img src="{{ user.imagen.url }}" alt="imagen no encontrada" class="image-menu">
-                            {% else %}
-                                <img src="{% static 'img/image_default.png'%}" alt="imagen no encontrada" class="image-menu">
-                            {% endif%}
+                        <li class='menu-selected'><a href="{% url 'estacionamientos'%}" class="text-menu-selected">Estacionamientos</a></li>
+                        <li><a href="{% url 'listar_post'%}">Blog</a></li>
+                        <li><a href="{% url 'recorridos'%}">Recorridos</a></li>
+                        <li><a href="{% url 'cerrarSesion'%}">Cerrar sesion</a></li>
+                        <li><a href="{% url 'perfil' %}"> {{user.nombres}} {{user.apellido}}</a></li>
+                        {% if user.imagen %}
+                        <img src="{{ user.imagen.url }}" alt="imagen no encontrada" class="image-menu">
+                        {% else %}
+                        <img src="{% static 'img/image_default.png'%}" alt="imagen no encontrada" class="image-menu">
+                        {% endif%}
                         {% endif %}
                         {% else %}
-                            <li><a href="{% url 'ingresar'%}" ><i
-                                    class="fas fa-user-plus"></i>Ingresar</a></li>
+                        <li class='menu-selected'><a href="{% url 'estacionamientos'%}" class="text-menu-selected">Estacionamientos</a></li>
+                        <li><a href="{% url 'listar_post'%}">Blog</a></li>
+                        <li><a href="{% url 'ingresar'%}"><i class="fas fa-user-plus"></i>Ingresar</a></li>
                         {% endif %}
                     </ul>
                 </nav>
@@ -64,40 +68,41 @@
         </div>
     </header>
     <!-- Estacionamientos -->
-    <div id="map"></div>
-    <!-- footer -->
-    <div class="container-footer">
-        <footer>
-            <div class="logo-footer">
-                <img src="{% static 'img/mobike.jpg' %}" alt="">
-            </div>
-            <div class="redes-footer">
-                <a href="https://www.facebook.com/MobikeCL/?brand_redir=1914107855579139"><i
-                        class="fab fa-facebook icon-redes-footer"></i></a>
-                <a href="https://www.instagram.com/mobikecl/"><i class="fab fa-instagram icon-redes-footer"></i></a>
-                <a href="https://twitter.com/MobikeCL"><i class="fab fa-twitter icon-redes-footer"></i></a>
-            </div>
-            <div class="certificacion">
-                <p>
-                    <a href="http://jigsaw.w3.org/css-validator/check/referer">
-                        <img style="border:0;width:88px;height:31px"
-                            src="http://jigsaw.w3.org/css-validator/images/vcss" alt="¡CSS Válido!" />
-                    </a>
-                </p>
-                <p>
-                    <a href="http://jigsaw.w3.org/css-validator/check/referer">
-                        <img style="border:0;width:88px;height:31px"
-                            src="http://jigsaw.w3.org/css-validator/images/vcss-blue" alt="¡CSS Válido!" />
-                    </a>
-                </p>
-            </div>
-            <hr>
-            <h4> 2020 Mobike - Todos los Derechos Reservados</h4>
-        </footer>
+        <div id="map"></div>
+        <!-- footer -->
+        <div class="container-footer">
+            <footer>
+                <div class="logo-footer">
+                    <img src="{% static 'img/mobike.jpg' %}" alt="">
+                </div>
+                <div class="redes-footer">
+                    <a href="https://www.facebook.com/MobikeCL/?brand_redir=1914107855579139"><i
+                            class="fab fa-facebook icon-redes-footer"></i></a>
+                    <a href="https://www.instagram.com/mobikecl/"><i class="fab fa-instagram icon-redes-footer"></i></a>
+                    <a href="https://twitter.com/MobikeCL"><i class="fab fa-twitter icon-redes-footer"></i></a>
+                </div>
+                <div class="certificacion">
+                    <p>
+                        <a href="http://jigsaw.w3.org/css-validator/check/referer">
+                            <img style="border:0;width:88px;height:31px"
+                                src="http://jigsaw.w3.org/css-validator/images/vcss" alt="¡CSS Válido!" />
+                        </a>
+                    </p>
+                    <p>
+                        <a href="http://jigsaw.w3.org/css-validator/check/referer">
+                            <img style="border:0;width:88px;height:31px"
+                                src="http://jigsaw.w3.org/css-validator/images/vcss-blue" alt="¡CSS Válido!" />
+                        </a>
+                    </p>
+                </div>
+                <hr>
+                <h4> 2020 Mobike - Todos los Derechos Reservados</h4>
+            </footer>
     </div>
     <!-- scripts -->
     <script src="{% static 'js/jquery.js' %}"></script>
     <script src="{% static 'js/map.js' %}"></script>
-     <script src="{% static 'js/script.js' %}"></script>
+    <script src="{% static 'js/script.js' %}"></script>
 </body>
+
 </html>

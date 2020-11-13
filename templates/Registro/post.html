@@ -1,16 +1,21 @@
 {% load static %}
-<!DOCTYPE html>
 <html lang="es">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport"
         content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <title>Mobike</title>
+    <title>Recorridos</title>
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
     <link rel="icon" href="{% static 'img/mobike.jpg' %}">
     <script src="https://kit.fontawesome.com/9c094d55de.js" crossorigin="anonymous"></script>
-    <link rel="stylesheet" href= " {% static 'css/estilos.css' %}">
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.2/dist/jquery.validate.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.2/dist/additional-methods.min.js"></script>
+    <link rel="stylesheet" href=" {% static 'css/estilos.css' %}">
+    <script src="js/modernizr.js"></script>
 </head>
+
 <body>
     <!-- header-menu -->
     <header>
@@ -22,13 +27,13 @@
             <div class="menu" id="show-menu">
                 <nav>
                     <ul>
-                        <li class='menu-selected'><a href="{% url 'inicio'%}"  class="text-menu-selected"><i class="fas fa-house-user"></i>Inicio</a></li>
+                        <li><a href="{% url 'inicio'%}" ><i class="fas fa-house-user"></i>Inicio</a></li>
                         <!-- usuario administrador -->
-                     <!-- usuario Administrador -->
+                        <!-- usuario Administrador -->
                         {% if user.is_authenticated %}
                         {% if user.is_admin %}
                             <li><a href="{% url 'admin:index'%}">Administrar</a></li>
-                            <li><a href="{% url 'listar_post'%}">Blog</a></li>
+                            <li class='menu-selected'><a href="{% url 'listar_post'%}" class="text-menu-selected">Blog</a></li>
                             <li><a href="{% url 'cerrarSesion'%}">Cerrar sesion</a></li>
                             <li><a href="{% url 'perfil' %}" > {{user.nombres}} {{user.apellido}}</a></li>
                             {% if user.imagen %}
@@ -40,8 +45,8 @@
                         <!-- usuario normal -->
                         {% if not user.is_admin %}
                             <li><a href="{% url 'estacionamientos'%}">Estacionamientos</a></li>
-                            <li><a href="{% url 'listar_post'%}">Blog</a></li>
-                            <li><a href="{% url 'recorridos'%}">Recorridos</a></li>
+                            <li class='menu-selected'><a href="{% url 'listar_post'%}" class="text-menu-selected">Blog</a></li>
+                            <li><a href="{% url 'recorridos'%}"><i class="far fa-dizzy"></i>Recorridos</a></li>
                             <li><a href="{% url 'cerrarSesion'%}">Cerrar sesion</a></li>
                             <li><a href="{% url 'perfil' %}" > {{user.nombres}} {{user.apellido}}</a></li>
                             {% if user.imagen %}
@@ -51,10 +56,9 @@
                             {% endif%}
                         {% endif %}
                         {% else %}
-                            <li><a href="{% url 'estacionamientos'%}">Estacionamientos</a></li>
-                            <li><a href="{% url 'listar_post'%}">Blog</a></li>
-                            <li><a href="{% url 'ingresar'%}" ><i
-                                    class="fas fa-user-plus"></i>Ingresar</a></li>
+                            <li><a href="{% url 'estacionamientos'%}" >Estacionamientos</a></li>
+                            <li class='menu-selected'><a href="{% url 'listar_post'%}" class="text-menu-selected">Blog</a></li>
+                            <li><a href="{% url 'ingresar'%}" >Ingresar</a></li>
                         {% endif %}
                     </ul>
                 </nav>
@@ -64,60 +68,61 @@
             <i class="fas fa-bars"></i>
         </div>
     </header>
-    <!-- portada -->
+    {% if messages %}
+    <ul class="messages alert-info">
+        {% for message in messages %}
+        <li {% if message.tags %} class="{{ message.tags }}" {% endif %}>{{ message }}</li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+    <!-- Recorridos -->
     <div class="container-x" id="move-content">
-        <div class="container-cover">
-            <div class="container-info-cover">
-                <h1> Let's Mobike!</h1>
-                <p>La solución perfecta de primera y última milla</p>
-            </div>
-        </div>
-        <div class="container-all">
-            <div class="container-content">
-                <article>
-                    <h2>¡Mobike te acerca a tu lugar de destino!</h2>
-                    <p>Miles de bicicletas disponibles a tu alrededor. ¡Finaliza el recorrido en cualquier estacionamiento para bicicletas que esté cerca de tu lugar de destino!</p>
-                    <h2>Una opción sencilla y práctica</h2>
-                    <p>Después de descargar la aplicación y registrarte, solo escanea el código QR que figura en la bicicleta y comienza tu recorrido. ¡Cierra el candado una vez que dejes la bicicleta en el área de estacionamiento y listo!
-                    </p>
-                    <h2>#MobikeMovement</h2>
-                    <p>Ya no tendrás que acarrear tu propia bicicleta a todos lados ni viajar apretado en los autobuses. ¡Simplemente usa Mobike para llegar a donde quieras!  </p>
-                    <iframe width="720" height="315" src="https://www.youtube.com/embed/dKBbOF5fBPI" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-                </article>
-                <!-- aside -->
-                <div class="container-aside">
-                    <aside><img src="{% static 'img/home1.jpg' %}" alt="">
-                        <h3>#QuédateEnCasa</h3>
-                        <p>🏠Quédate en casa, para volver a pedalear pronto🚲
-                            -
-                            📲Para más información visita: https://gob.cl/coronavirus/
-                            👮‍Obtén tu permiso o salvoconducto en: https://comisariavirtual.cl
-                            -
-                            😷¡Ya llegará el momento en que podremos volver a estar juntos! 🤗
-                            -
-                            #SoyMobiker #PedaleaResponsablemente</p>
-                        <a href="https://www.instagram.com/p/CCZrgvkHRnR/">VER PUBLICACIÓN</a>
-                    </aside>
-                    <aside><img src="{% static 'img/home2.jpg' %}" alt="">
-                        <h3>#APPGallery</h3>
-                        <p>📲 ¡Ahora nos puedes encontrar directamente en la APP Gallery de Huawei y prepárate que mañana tenemos un concurso para ti! 🚲
-                            -
-                            #SoyMobiker</p>
-                        <a href="https://www.instagram.com/p/B5oUR_AnCOT/">VER PUBLICACIÓN</a>
-                    </aside>
-                    <aside><img src="{% static 'img/home3.jpg' %}" alt="">
-                        <h3>#PaseMensual</h3>
-                        <p>🚲¡Atentos Mobikers! 😎 🎉¡Nuestro Pase Mensual ahora a $4.500!✨ 👌¡Aprovecha por tan solo $150 al día! 📲
-
-                            #SoyMobiker</p>
-                        <a href="https://www.instagram.com/p/B8zg7RGnZre/">VER PUBLICACIÓN</a>
-                    </aside>
+        <div class="container-general-post">
+            <div class="container-post">
+                <div class="ctn-post">
+                    
+                   <div class="crear_post">
+                        <h1>Bienvenido a nuestro Blog!!</h1>
+                        <img src=" {% static 'img/camara.png' %}" alt="">
+                        {% if user.is_authenticated %}
+                        <a href="{% url 'agregar_post'%}"> ---> Sube tu post! <--- </a>
+                        {% endif %}
+                    </div>
+                    {% if post %}
+                    {% for c in post %}
+                        <div class="card">
+                            <h4 class="card-title">{{ c.titulo }}</h4>
+                            <p>{{ c.fecha_post}} </p>
+                            <p>{{ c.usuario }}</p>
+                            <img class="card-img-top avatar" src="{{ c.imagen.url }}" alt="imagen no encontrada">
+                            <div class="card-body">
+                            <br>
+                            <p class="descripcion"> {{ c.descripcion }} </p>
+                            {% if user.is_authenticated %}
+                            {% if user.is_admin %} 
+                                <a href="{% url 'editar_post' c.id %}" class="btn btn-primary" > Editar </a>
+                                <a href="{% url 'borrar_post' c.id %}" class="btn btn-danger" onclick="confirmation()"> Borrar </a>
+                            {% endif %}
+                            {% endif %}
+                            {% if user.is_authenticated %}
+                            {% if user == c.usuario %}
+                                <a href="{% url 'editar_post' c.id %}" class="btn btn-primary" > Editar </a>
+                                <a href="{% url 'borrar_post' c.id %}" class="btn btn-danger" onclick="confirmation()"> Borrar </a>
+                            {% endif %}
+                            {% endif %}
+                            </div>
+                        </div>
+                    {% endfor %}
+                    {% else %}
+                        <p>No hay registros de recorridos</p>
+                    {% endif %}
+                
                 </div>
             </div>
         </div>
-        <!-- footer -->
+    <!-- footer -->
         <div class="container-footer">
-            <footer>
+           <footer>
                 <div class="logo-footer">
                     <img src="{% static 'img/mobike.jpg' %}" alt="">
                 </div>
@@ -147,8 +152,10 @@
             </footer>
         </div>
     </div>
+    <!-- scripts -->
     <script src="{% static 'js/jquery.js' %}"></script>
     <script src="{% static 'js/script.js' %}"></script>
+    <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
+    <script src="{% static 'js/bootstrap.min.js' %}"></script>
 </body>
-
 </html>

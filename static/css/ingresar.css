@@ -117,7 +117,7 @@ input[type="submit"]:hover{
     align-items: center;
     display:flex;
     font-size: 70px;
-    margin-top: 80px;
+    margin: auto;
 }
 
 .ctn-text p{

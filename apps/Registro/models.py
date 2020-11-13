@@ -20,3 +20,14 @@ class Recorridos(models.Model):
     
     def __str__(self):
         return self.origen + '-' + self.destino
+
+class Post (models.Model):
+    usuario = models.ForeignKey(Usuario,null=False, on_delete=models.CASCADE)
+    titulo = models.CharField( max_length=100)
+    descripcion = models.CharField(max_length=500)
+    fecha_post = models.DateTimeField(auto_now=True)
+    imagen = models.ImageField(
+        'Imagen de perfil', upload_to='post/', max_length=200, blank=True, null=True)
+    
+    def __str__(self):
+        return self.titulo
