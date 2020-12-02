@@ -8,8 +8,8 @@ class UserUpdateForm(forms.ModelForm):
         model = Usuario
         fields = [
             'username',
-            'nombres',
-            'apellido',
+            'first_name',
+            'last_name',
             'email',
-            'imagen'
+            'picture'
         ]

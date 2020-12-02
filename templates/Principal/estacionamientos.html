@@ -1,6 +1,8 @@
 {% load static %}
 <!DOCTYPE html>
 <html lang="es">
+{% load pwa %}
+{% progressive_web_app_meta %}
 
 <head>
     <meta charset="UTF-8">
@@ -33,30 +35,37 @@
                         {% if user.is_admin %}
                         <li><a href="{% url 'admin:index'%}"><i class="far fa-dizzy"></i>Administrar</a></li>
                         <li><a href="{% url 'listar_post'%}">Blog</a></li>
+                        <li><a href="{% url 'tarjeta'%}">Tarjeta</a></li>
                         <li><a href="{% url 'cerrarSesion'%}">Cerrar sesion</a></li>
-                        <li><a href="{% url 'perfil' %}"> {{user.nombres}} {{user.apellido}}</a></li>
-                        {% if user.imagen %}
-                        <img src="{{ user.imagen.url }}" alt="imagen no encontrada" class="image-menu">
+                        <li><a href="{% url 'perfil' %}"> {{user.first_name}} {{user.last_name}}</a></li>
+                        {% if user.picture %}
+                        <img src="{{ user.picture.url }}" alt="picture no encontrada" class="image-menu">
                         {% else %}
-                        <img src="{% static 'img/image_default.png'%}" alt="imagen no encontrada" class="image-menu">
+                        <img src="{% static 'img/image_default.png'%}" alt="picture no encontrada" class="image-menu">
                         {% endif%}
                         {% endif %}
                         <!-- usuario normal -->
                         {% if not user.is_admin %}
                         <li class='menu-selected'><a href="{% url 'estacionamientos'%}" class="text-menu-selected">Estacionamientos</a></li>
                         <li><a href="{% url 'listar_post'%}">Blog</a></li>
+                        <li><a href="{% url 'tarjeta'%}">Tarjeta</a></li>
                         <li><a href="{% url 'recorridos'%}">Recorridos</a></li>
                         <li><a href="{% url 'cerrarSesion'%}">Cerrar sesion</a></li>
-                        <li><a href="{% url 'perfil' %}"> {{user.nombres}} {{user.apellido}}</a></li>
-                        {% if user.imagen %}
-                        <img src="{{ user.imagen.url }}" alt="imagen no encontrada" class="image-menu">
-                        {% else %}
-                        <img src="{% static 'img/image_default.png'%}" alt="imagen no encontrada" class="image-menu">
+                        <li><a href="{% url 'perfil' %}"> {{user.first_name}} {{user.last_name}}</a></li>
+                        {% for auth in backends.associated %}
+                            {% if auth.provider == 'facebook' %}
+                                <img src="{{ auth.extra_data.picture.data.url }}" alt="" class="image-menu">
                         {% endif%}
+                        {% endfor %}
+                        {% if user.picture %}
+                                <img src="{{ user.picture.url }}" alt="picture no encontrada" class="image-menu">
+                        {% endif%}
+                        
                         {% endif %}
                         {% else %}
                         <li class='menu-selected'><a href="{% url 'estacionamientos'%}" class="text-menu-selected">Estacionamientos</a></li>
                         <li><a href="{% url 'listar_post'%}">Blog</a></li>
+                        <li><a href="{% url 'tarjeta'%}">Tarjeta</a></li>
                         <li><a href="{% url 'ingresar'%}"><i class="fas fa-user-plus"></i>Ingresar</a></li>
                         {% endif %}
                     </ul>

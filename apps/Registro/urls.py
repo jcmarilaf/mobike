@@ -19,7 +19,12 @@ urlpatterns = [
 
     # borrar una post
     path('borrar_post/<int:post_id>', views.borrar_post, name="borrar_post"),
+    
+    path('tarjeta', views.api_tarjeta, name="tarjeta"),
 
+      # api
+    path('post_api/',  views.post_collection , name='post_collection'),
+    path('post_api/<int:pk>/', views.post_element ,name='post_element')
 ]
 
 if settings.DEBUG:

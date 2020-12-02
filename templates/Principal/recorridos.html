@@ -1,6 +1,8 @@
 {% load static %}
 <html lang="es">
-
+    {% load pwa %}
+    {% progressive_web_app_meta %}
+    
 <head>
     <meta charset="UTF-8">
     <meta name="viewport"
@@ -30,30 +32,37 @@
                         {% if user.is_admin %}
                         <li><a href="{% url 'admin:index'%}"></i>Administrar</a></li>
                         <li><a href="{% url 'listar_post'%}">Blog</a></li>
+                        <li><a href="{% url 'tarjeta'%}">Tarjeta</a></li>
                         <li><a href="{% url 'cerrarSesion'%}">Cerrar sesion</a></li>
-                        <li><a href="{% url 'perfil' %}"> {{user.nombres}} {{user.apellido}}</a></li>
-                        {% if user.imagen %}
-                        <img src="{{ user.imagen.url }}" alt="imagen no encontrada" class="image-menu">
+                        <li><a href="{% url 'perfil' %}"> {{user.first_name}} {{user.last_name}}</a></li>
+                        {% if user.picture %}
+                        <img src="{{ user.picture.url }}" alt="picture no encontrada" class="image-menu">
                         {% else %}
-                        <img src="{% static 'img/image_default.png'%}" alt="imagen no encontrada" class="image-menu">
+                        <img src="{% static 'img/image_default.png'%}" alt="picture no encontrada" class="image-menu">
                         {% endif%}
                         {% endif %}
                         <!-- usuario normal -->
                         {% if not user.is_admin %}
                         <li><a href="{% url 'estacionamientos'%}">Estacionamientos</a></li>
                         <li><a href="{% url 'listar_post'%}">Blog</a></li>
+                        <li><a href="{% url 'tarjeta'%}">Tarjeta</a></li>
                         <li class='menu-selected'><a href="{% url 'recorridos'%}" class="text-menu-selected">Recorridos</a></li>
                         <li><a href="{% url 'cerrarSesion'%}">Cerrar sesion</a></li>
-                        <li><a href="{% url 'perfil' %}"> {{user.nombres}} {{user.apellido}}</a></li>
-                        {% if user.imagen %}
-                        <img src="{{ user.imagen.url }}" alt="imagen no encontrada" class="image-menu">
-                        {% else %}
-                        <img src="{% static 'img/image_default.png'%}" alt="imagen no encontrada" class="image-menu">
+                        <li><a href="{% url 'perfil' %}"> {{user.first_name}} {{user.last_name}}</a></li>
+                              {% for auth in backends.associated %}
+                            {% if auth.provider == 'facebook' %}
+                                <img src="{{ auth.extra_data.picture.data.url }}" alt="" class="image-menu">
                         {% endif%}
+                        {% endfor %}
+                        {% if user.picture %}
+                                <img src="{{ user.picture.url }}" alt="picture no encontrada" class="image-menu">
+                        {% endif%}
+                        
                         {% endif %}
                         {% else %}
                         <li><a href="{% url 'estacionamientos'%}">Estacionamientos</a></li>
                         <li><a href="{% url 'listar_post'%}">Blog</a></li>
+                        <li><a href="{% url 'tarjeta'%}">Tarjeta</a></li>
                         <li><a href="{% url 'ingresar'%}"><i class="fas fa-user-plus"></i>Ingresar</a></li>
                         {% endif %}
                     </ul>
@@ -67,8 +76,9 @@
     <!-- Recorridos -->
     <div class="container-x" id="move-content">
         <div class="container-tabla-recorridos">
-            <div class="container-recorridos">
-                <table class="table">
+            <div class="container-recorridos" id="table-recorridos">
+                <p>Recorridos</p>
+                <table class="table" >
                     <thead class="thead-dark">
                         <tr>
                             <th>Origen</th>
@@ -89,7 +99,10 @@
                         <br>
                         {% endfor %}
                         {% else %}
-                        <p>No hay registros de recorridos</p>
+                        <td>No hay registros de recorridos</td>
+                        <td>No hay registros de recorridos</td>
+                        <td>No hay registros de recorridos</td>
+                        <td>No hay registros de recorridos</td>
                         {% endif %}
                 </table>
             </div>

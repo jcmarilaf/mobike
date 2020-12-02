@@ -6,6 +6,20 @@ from apps.Usuario.models import Usuario
 from django.views.generic import ListView
 from apps.Usuario.forms import UserUpdateForm
 from django.contrib import messages
+#------------- importacines API ---------------------
+from django.http import HttpResponse
+from rest_framework.decorators import api_view
+from rest_framework.response import Response
+from .serializers import PostSerializer
+from django.shortcuts import render, redirect, get_object_or_404
+from rest_framework import status
+from django.http.response import JsonResponse
+from rest_framework.parsers import JSONParser 
+
+#-----------------------APPI----------------------------
+
+def api_tarjeta(request):
+    return render(request, "Principal/tarjeta.html")
 
 
 def listar_recorridos(request):
@@ -109,3 +123,54 @@ def editar_post(request,post_id):
 
     # Si llegamos al final renderizamos el formulario
     return render(request, "Registro/editar_post.html", {'form': form})
+
+
+
+@api_view(['GET'])
+def post_collection(request):
+    if request.method == 'GET':
+        post = Post.objects.all()
+        serializer = PostSerializer(post, many=True)
+        return Response(serializer.data)
+ 
+@api_view(['GET'])
+def post_element(request, pk):
+    post = get_object_or_404(Post, id=pk)
+ 
+    if request.method == 'GET':
+        serializer = PostSerializer(post)
+        return Response(serializer.data)
+
+@api_view(['GET', 'POST'])
+def post_collection(request):
+    if request.method == 'GET':
+        post = Post.objects.all()
+        serializer = PostSerializer(post, many=True)
+        return Response(serializer.data)
+    elif request.method == 'POST':
+        serializer = PostSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            # Si el proceso de deserialización funciona, devolvemos una respuesta con un código 201 (creado
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        # si falla el proceso de deserialización, devolvemos una respuesta 400
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+@api_view(['GET', 'PUT', 'DELETE'])
+def post_element(request, pk):
+    post = get_object_or_404(Post, id=pk)
+ 
+    if request.method == 'GET':
+        serializer = PostSerializer(post)
+        return Response(serializer.data)
+    elif request.method == 'DELETE':
+        post.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
+    
+    elif request.method == 'PUT': 
+        post_new = JSONParser().parse(request) 
+        serializer = PostSerializer(post, data=post_new) 
+        if serializer.is_valid(): 
+            serializer.save() 
+            return Response(serializer.data, status=status.HTTP_200_OK)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)

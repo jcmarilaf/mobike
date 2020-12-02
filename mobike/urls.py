@@ -18,20 +18,18 @@ urlpatterns = [
     path('ingresar/', auth_views.LoginView.as_view(template_name='Usuario/ingresar.html'), name='ingresar'),
     path('logout/', LogoutView.as_view(template_name='Usuario/logout.html'), name='cerrarSesion'),
     
-    
-    
-    
-    
     path('recuperarcontrasena/', PasswordResetView.as_view(template_name = 'Usuario/recuperarcontrasena.html'), name='recuperarcontrasena'),
     
-    
     path('password-reset/done/', PasswordResetDoneView.as_view(template_name='Usuario/password_reset_done.html'), name='password_reset_done'),
-    
     
     path('password-reset-confirm/<uidb64>/<token>/', PasswordResetConfirmView.as_view(template_name=  'Usuario/password_reset_confirm.html') 
             , name='password_reset_confirm' ),
     
     path('password-reset-complete/', PasswordResetCompleteView.as_view(template_name='Usuario/password_reset_complete.html'), name='password_reset_complete'),
+    
+    path('social-auth/', include('social_django.urls', namespace="social")),
+    
+    path('', include('pwa.urls')),
 ]
 
 if settings.DEBUG:

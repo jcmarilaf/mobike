@@ -28,6 +28,8 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
+SOCIAL_AUTH_FACEBOOK_KEY = "714999169137452"
+SOCIAL_AUTH_FACEBOOK_SECRET = "e94c2e6e03c5b419a609bf9036d0c838"
 
 # Application definition
 
@@ -40,7 +42,11 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'apps.Registro',
     'apps.Usuario',
-]
+    'social_django',
+    'social.apps.django_app.default',
+    'rest_framework',
+    'pwa',
+    ]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -50,6 +56,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'social_django.middleware.SocialAuthExceptionMiddleware',
 ]
 
 ROOT_URLCONF = 'mobike.urls'
@@ -65,10 +72,29 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'social_django.context_processors.backends', 
+                'social_django.context_processors.login_redirect',
             ],
         },
     },
 ]
+
+SOCIAL_AUTH_USER_MODEL = 'Usuario.Usuario'  
+
+SOCIAL_AUTH_FACEBOOK_SCOPE = ['email'] 
+
+SOCIAL_AUTH_FACEBOOK_PROFILE_EXTRA_PARAMS = {  
+  'fields': 'id, name, email, picture.type(large)'
+}
+
+
+SOCIAL_AUTH_FACEBOOK_EXTRA_DATA = [               
+    ('name', 'name'),
+    ('email', 'email'),
+    ('picture', 'picture'),
+]
+
+USER_FIELDS = ['username', 'email','first_name','last_name']
 
 WSGI_APPLICATION = 'mobike.wsgi.application'
 
@@ -127,8 +153,15 @@ STATICFILES_DIRS = [BASE_DIR / "static"]
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
+SOCIAL_AUTH_RAISE_EXCEPTIONS = False
+LOGIN_ERROR_URL = '/inicio/'
+
 LOGIN_REDIRECT_URL = 'inicio'
 LOGOUT_REDIRECT_URL = 'inicio'
+LOGIN_URL = 'inicio'
+LOGOUT_URL = 'cerrarSesion'
+
+SOCIAL_AUTH_LOGIN_REDIRECT_URL = "inicio"
 
 AUTH_USER_MODEL = 'Usuario.Usuario'
 
@@ -138,3 +171,32 @@ EMAIL_PORT = 587
 EMAIL_HOST_USER = 'tomynapoleonmaca@gmail.com'
 EMAIL_HOST_PASSWORD = 'napoleon1234'
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+
+AUTHENTICATION_BACKENDS = [
+    'social.backends.facebook.FacebookAppOAuth2',
+    'social.backends.facebook.FacebookOAuth2',
+    'django.contrib.auth.backends.ModelBackend',
+    'social_core.backends.facebook.FacebookOAuth2',
+]
+
+#------------------------------------------ PWA ------------------------------------------------
+PWA_SERVICE_WORKER_PATH = os.path.join(BASE_DIR, 'static/js', 'serviceworker.js')
+
+PWA_APP_NAME = 'Proyecto Registro mobike'
+PWA_APP_DESCRIPTION = 'Registro mobike Web App DUOC'
+PWA_APP_THEME_COLOR = '#87EFC3'
+PWA_APP_BACKGROUND_COLOR = '#fff'
+PWA_APP_ICONS = [
+    {
+        'src': '/static/img/icons/camara.png',
+        'sizes': '128x128'
+    },
+    {
+        'src': '/static/img/icons/mobike.jpg',
+        'sizes': '256x256'
+    },
+    {
+        'src': '/static/img/icons/mobike2.png',
+        'sizes': '512x512'
+    }
+]

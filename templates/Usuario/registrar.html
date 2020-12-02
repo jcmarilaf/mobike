@@ -1,6 +1,8 @@
 {% load static %}
 <!DOCTYPE html>
 <html lang="es">
+{% load pwa %}
+{% progressive_web_app_meta %}
 <head>
     <meta charset="UTF-8">
     <meta name="viewport"
@@ -30,32 +32,35 @@
                         {% if user.is_admin %}
                         <li><a href="{% url 'admin:index'%}">Administrar</a></li>
                         <li><a href="{% url 'listar_post'%}">Blog</a></li>
+                        <li><a href="{% url 'tarjeta'%}">Tarjeta</a></li>
                         <li><a href="{% url 'cerrarSesion'%}">Cerrar sesion</a></li>
                         <li class='menu-selected'><a href="{% url 'perfil' %}" class="text-menu-selected">
-                                {{user.nombres}} {{user.apellido}}</a></li>
-                        {% if user.imagen %}
-                        <img src="{{ user.imagen.url }}" alt="imagen no encontrada" class="image-menu">
+                                {{user.first_name}} {{user.last_name}}</a></li>
+                        {% if user.picture %}
+                        <img src="{{ user.picture.url }}" alt="picture no encontrada" class="image-menu">
                         {% else %}
-                        <img src="{% static 'img/image_default.png'%}" alt="imagen no encontrada" class="image-menu">
+                        <img src="{% static 'img/image_default.png'%}" alt="picture no encontrada" class="image-menu">
                         {% endif%}
                         {% endif %}
                         <!-- usuario normal -->
                         {% if not user.is_admin %}
                         <li><a href="{% url 'estacionamientos'%}">Estacionamientos</a></li>
                         <li><a href="{% url 'listar_post'%}">Blog</a></li>
+                        <li><a href="{% url 'tarjeta'%}">Tarjeta</a></li>
                         <li><a href="{% url 'recorridos'%}">Recorridos</a></li>
                         <li><a href="{% url 'cerrarSesion'%}">Cerrar sesion</a></li>
                         <li class='menu-selected'><a href="{% url 'perfil' %}" class="text-menu-selected">
-                                {{user.nombres}} {{user.apellido}}</a></li>
-                        {% if user.imagen %}
-                        <img src="{{ user.imagen.url }}" alt="imagen no encontrada" class="image-menu">
+                                {{user.first_name}} {{user.last_name}}</a></li>
+                        {% if user.picture %}
+                        <img src="{{ user.picture.url }}" alt="picture no encontrada" class="image-menu">
                         {% else %}
-                        <img src="{% static 'img/image_default.png'%}" alt="imagen no encontrada" class="image-menu">
+                        <img src="{% static 'img/image_default.png'%}" alt="picture no encontrada" class="image-menu">
                         {% endif%}
                         {% endif %}
                         {% else %}
                         <li><a href="{% url 'estacionamientos'%}">Estacionamientos</a></li>
                         <li><a href="{% url 'listar_post'%}">Blog</a></li>
+                        <li><a href="{% url 'tarjeta'%}">Tarjeta</a></li>
                         <li><a href="{% url 'ingresar'%}"><i class="fas fa-user-plus"></i>Ingresar</a></li>
                         {% endif %}
                     </ul>
@@ -83,13 +88,13 @@
                         </div>
                         <div class="form-group">
                             <label>Nombre</label>
-                            <input class="form-control" type="text" placeholder="Ingrese Nombre" name="nombres">
+                            <input class="form-control" type="text" placeholder="Ingrese Nombre" name="first_name">
                             <div class="error"{{ form.errors.first_name}}></div> 
                             <br>
                         </div>
                         <div class="form-group">
                             <label>Apellido</label>
-                            <input class="form-control" type="text" placeholder="Ingrese Apellido" name="apellido">
+                            <input class="form-control" type="text" placeholder="Ingrese last_name" name="last_name">
                             <div class="error"{{ form.errors.last_name}}></div> 
                             <br>
                         </div>

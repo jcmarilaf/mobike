@@ -21,5 +21,5 @@ class RecorridosForm(forms.ModelForm):
 class PostForm(forms.ModelForm):
     class Meta:
         model = Post
-        fields = ['usuario','titulo','descripcion','imagen']
+        fields = ['usuario','titulo','descripcion','picture']
 

@@ -36,9 +36,10 @@
                         {% endif %}
                         <li><a href="{% url 'recorridos'%}"><i class="far fa-dizzy"></i>Recorridos</a></li>
                         <li><a href="{% url 'cerrarSesion'%}">Cerrar sesion</a></li>
-                        <li><a href="#"> {{user.nombres}} {{user.apellido}}</a></li>
+                        <li><a href="#"> {{user.first_name}} {{user.last_name}}</a></li>
                         {% else %}
                         <li><a href="{% url 'listar_post'%}">Blog</a></li>
+                        <li><a href="{% url 'tarjeta'%}">Tarjeta</a></li>
                         <li class='menu-selected'><a href="{% url 'ingresar'%}" class="text-menu-selected"><i class="fas fa-user-plus"></i>Ingresar</a></li>
                         {% endif %}
                     </ul>

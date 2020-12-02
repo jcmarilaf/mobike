@@ -9,14 +9,14 @@ class RegistroForm(UserCreationForm):
         model = Usuario
         fields = [
             'username',
-            'nombres',
-            'apellido',
+            'first_name',
+            'last_name',
             'email',
         ]
         labels = {
             'username':'Nombre de usuario',
-            'nombres':'Nombre',
-            'apellido':'Apellido',
+            'first_name':'Nombre',
+            'last_name':'last_name',
             'email':'Correo',
         }
 
@@ -26,8 +26,8 @@ class UserUpdateForm(forms.ModelForm):
         model = Usuario
         fields = [
             'username',
-            'nombres',
-            'apellido',
+            'first_name',
+            'last_name',
             'email',
-            'imagen'
+            'picture'
         ]
